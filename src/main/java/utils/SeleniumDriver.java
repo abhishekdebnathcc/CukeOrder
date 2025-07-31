@@ -30,7 +30,7 @@ public class SeleniumDriver {
     private final static int TIMEOUT = 15;
 
     //INITIALIZING A CONSTANT PAGE LOAD TIMEOUT VALUE OF 50 SECONDS
-    private final static int PAGE_LOAD_TIMEOUT = 60;
+    private final static int PAGE_LOAD_TIMEOUT = 70;
 
     //CREATING A PRIVATE CONSTRUCTOR BY FOLLOWING SINGLETON PATTERN
     private SeleniumDriver(String browser) {

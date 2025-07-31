@@ -19,6 +19,7 @@ public class BasePage {
     public static Logger log = Logger.getLogger(BasePage.class.getName());
     public static WebDriver driver;
     public static ArrayList<String> orderIDList = new ArrayList<>();
+    public static ArrayList<String> emailList = new ArrayList<>();
 
 
     public static boolean isElementPresent(By element) {

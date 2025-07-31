@@ -7,30 +7,35 @@ Feature: Open the funnel
   @sweep
   Scenario Outline: Place orders without selecting any item
     Given user has opened <browser>
-    When user has navigated to the funnel "https://firstratebuyers.com/?AFFID=test&C1=testc1&C2=testc2&C3=testc3"
+    When user has navigated to the funnel "https://ultimateshopdepot.com/?affid=1"
     Then user has filled up the <email>
     And user has added the shipping information
-      | Phone Number | First Name | Last Name | Address      | City      | State      | Zip Code |  |
-      | 1234567890   | TEST FIRST | TEST LAST | TEST ADDRESS | TEST CITY | California | 12345    |  |
+      | Phone Number | First Name | Last Name | Address      | City      | State    | Zip Code |  |
+      | 1234567890   | TEST FIRST | TEST LAST | TEST ADDRESS | TEST CITY | Oklahoma | 12345    |  |
 #    And user has submitted the form
-#      Then user has typed the <creditCardNumber> and  <paymentType>
-#      And user has selected the order type as <orderType> and payment type as <paymentType>
+#    Then user has typed the <creditCardNumber> and  <paymentType>
+#    And user has selected the order type as <orderType> and payment type as <paymentType>
+#######
+#      And user has entered the billing information
+#        | First Name | Last Name | Address      | City      | State  | Zip Code |
+#        | BILL FIRST | BILL LAST | BILL ADDRESS | BILL CITY | Nevada | 54321    |
 ######
-##      And user has entered the billing information
-##        | First Name | Last Name | Address      | City      | State   | Zip Code |
-##        | BILL FIRST | BILL LAST | BILL ADDRESS | BILL CITY | Arizona | 54321    |
-######
-#      Then user submits the order
-#      And collect the order information from url
+#    Then user submits the order
+#    And collect the order information from url
 
     Examples:
       | browser | email | creditCardNumber | orderType | paymentType |
-      |         | +     | 1444444444444440 | Regular   | VISA        |
-      |         | +     | 1444444444444443 | Regular   | Master      |
-#      |         | +     | 1444444444444442 | Prepaid   | VISA        |
-#      |         | +     | 1444444444444446 | Prepaid   | Master      |
-#      | edge    | +     | 4147090000000001 | Bin       | VISA        |
+#      | fox     | +     | 1444444444444441 | Decline   | Visa        |
+#      |         | +     | 1444444444444445 | Decline   | Master      |
+#      | fox     | +     | 1444444444444442 | Prepaid   | VISA        |
+#      | fox     | +     | 1444444444444446 | Prepaid   | Master      |
+      |         |       | 1444444444444440 | Regular   | VISA        |
+#      | fox     | +     | 1444444444444443 | Regular   | Master      |
+#      |         |       | 4147090000000001 | Bin       | VISA        |
 #      |         | +     | 5156760000000001 | Bin       | Master      |
+
+
+#      |         | test07 | 0000000000000000 | Regular        | Discover      |
 
 
 

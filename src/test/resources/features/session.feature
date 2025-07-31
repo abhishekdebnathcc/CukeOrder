@@ -5,7 +5,7 @@ Feature:  Testing the session
 
   Scenario Outline: Testing the session
     Given user has opened chrome
-    When user has navigated to the funnel "https://firstratebuyers.com/?affid=1"
+    When user has navigated to the funnel "https://ultimateshopdepot.com/?affid=1"
     Then user has filled up the <email>
     And user has added the shipping information
       | Phone Number | First Name | Last Name | Address      | City      | State   | Country       | Zip Code |
@@ -14,7 +14,7 @@ Feature:  Testing the session
     Then user has typed the <creditCardNumber> and  <paymentType>
     And user has selected the order type as <orderType> and payment type as <paymentType>
     Then user opens a new tab
-    When user has navigated to the funnel "https://firstratebuyers.com/?affid=1"
+    When user has navigated to the funnel "https://ultimateshopdepot.com/?affid=1"
     Then user has filled up the <email>
     And user has added the shipping information
       | Phone Number | First Name | Last Name | Address      | City      | State   | Zip Code |  |

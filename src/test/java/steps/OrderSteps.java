@@ -21,6 +21,7 @@ import java.util.Map;
 public class OrderSteps extends BasePage {
 
 //    public WebDriver driver;
+    public String email;
 
     @Given("user has opened {}")
     public void userHasOpened(String arg0) {
@@ -43,6 +44,7 @@ public class OrderSteps extends BasePage {
         } else if (arg0.equals("+")) {
             arg0 = "abhishek.debnath+"+(int)(Math.random()*1000);
         }
+        email = arg0;
         type(By.name("email"), arg0+"@codeclouds.com");
     }
 
@@ -119,6 +121,7 @@ public class OrderSteps extends BasePage {
     @And("collect the order information from url")
     public void collectTheOrderInformationFromUrl() {
         getOrderID();
+        emailList.add(email);
     }
 
 

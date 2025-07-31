@@ -13,7 +13,7 @@
       | TEST   FNAME | TEST LNAME | 1234567890   | Test Address | 12345    | Test City | Florida |
 #    Then user submits the form
 #    And user selects an <item>
-    And user enters payment information <creditCard>
+#    And user enters payment information <creditCard>
 #    Then user submits the payment form
 
 #    Then user chooses <upsell>

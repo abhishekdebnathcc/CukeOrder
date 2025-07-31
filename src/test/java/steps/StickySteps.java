@@ -22,7 +22,7 @@ public class StickySteps extends BasePage {
 
     @And("user logs in to the admin")
     public void userLogsInToTheAdmin() {
-        SeleniumDriver.getWaitDriver().until(ExpectedConditions.urlContains("dashboard"));
+        SeleniumDriver.getWaitDriver().until(ExpectedConditions.urlContains("dashboard.php"));
         String adminURL = driver.getCurrentUrl();
         orderPage = adminURL.replace("dashboard", "orders");
         driver.get(orderPage);
@@ -44,5 +44,17 @@ public class StickySteps extends BasePage {
     public void userHasNavigatedToTheAdmin(String arg0) {
         SeleniumDriver.setupDriver("firefox");
         driver.get(arg0);
+    }
+
+    @Then("user searches with email address")
+    public void userSearchesWithEmailAddress() {
+        SeleniumDriver.getWaitDriver().until(ExpectedConditions.urlContains("order"));
+        for (String email : emailList) {
+            type(By.id("email_filter"), email).sendKeys(Keys.ENTER);
+            for (int i = 1; i < emailList.size(); i++) {
+                driver.switchTo().newWindow(WindowType.TAB);
+                driver.get(orderPage);
+            }
+        }
     }
 }
