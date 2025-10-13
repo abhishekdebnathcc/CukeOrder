@@ -17,10 +17,13 @@ public class SecuritySteps extends BasePage {
     public String baseURL;
     public String securityURL;
     public String insecureURL;
+    public String checkoutURL;
+    public String originalURL;
 
     @Given("The base url is {string}")
     public void theBaseUrlIs(String arg0) {
-        baseURL = arg0;
+        originalURL = arg0;
+        baseURL = arg0+"?AFFID=test&C1=testc1&C2=testc2&C3=testc3";
     }
 
     @When("user has started {}")
@@ -66,14 +69,31 @@ public class SecuritySteps extends BasePage {
             type(By.xpath("//*[@id='url']"), baseURL).sendKeys(Keys.ENTER);
 
         } else if (securityURL.equals("https://www.opengraph.xyz/")) {
+            Thread.sleep(1000);
+//            click(By.xpath("//*[@id='radix-:Re6:']/div[2]/button[1]"));
+            try {
+                click(By.xpath("//button[text()='Reject All']"));
+            } catch (Exception e) {
+//                Thread.sleep(1000);
+//                type(By.name("website"), baseURL).sendKeys(Keys.ENTER);
+////                SeleniumDriver.getWaitDriver().until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id='headlessui-dialog-panel-:ri:']/button/svg")));
+//                Thread.sleep(15000);
+//                click(By.xpath("//*[@id='headlessui-dialog-panel-:rh:']/button"));
+            }
             type(By.name("website"), baseURL).sendKeys(Keys.ENTER);
-            SeleniumDriver.getWaitDriver().until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id='headlessui-dialog-panel-:ri:']/button/svg")));
-            click(By.xpath("//*[@id='headlessui-dialog-panel-:ri:']/button/svg"));
+//                SeleniumDriver.getWaitDriver().until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id='headlessui-dialog-panel-:ri:']/button/svg")));
+            Thread.sleep(10000);
+            click(By.xpath("//*[@id='headlessui-dialog-panel-:rh:']/button"));
+            Thread.sleep(1000);
+            scroll(By.xpath("//*[@id='__next']/div/div/main/div[2]/div/div/div[2]/div/h2"));
+//            type(By.name("website"), baseURL).sendKeys(Keys.ENTER);
+
 //            click(By.xpath("//*[@id='__next']/div/main/section[1]/div/div/div/form/div[2]/button/span"));
         } else if (securityURL.equals("https://tools.keycdn.com/http2-test")) {
             type(By.id("url"), baseURL).sendKeys(Keys.ENTER);
         } else if (securityURL.equals("https://validator.w3.org/nu/")) {
             type(By.id("doc"), baseURL).sendKeys(Keys.ENTER);
+            scroll(By.xpath("//*[@id='submit']"));
         } else if (securityURL.equals("https://www.whatsmydns.net/")) {
             type(By.id("q"), baseURL).sendKeys(Keys.ENTER);
             driver.switchTo().newWindow(WindowType.TAB);
@@ -86,6 +106,7 @@ public class SecuritySteps extends BasePage {
         } else if (securityURL.equals("https://www.ssllabs.com/ssltest/")) {
             type(By.xpath("//input[@type='text']"), baseURL).sendKeys(Keys.ENTER);
         } else if (securityURL.equals("https://gtmetrix.com/")) {
+            String checkoutURL = "";
             jsClick(By.xpath("//*[@id='user-nav-login']/a"));
             type(By.id("li-email"), "dev@codeclouds.biz");
             type(By.id("li-password"), "c0decl0uds@");
@@ -94,6 +115,19 @@ public class SecuritySteps extends BasePage {
 //            SeleniumDriver.getWaitDriver().until(ExpectedConditions.)
             Thread.sleep(3000);
             type(By.xpath("//div[@class='clearable-input']/input"), baseURL).sendKeys(Keys.ENTER);
+            driver.switchTo().newWindow(WindowType.TAB);
+            driver.get(securityURL);
+//             checkoutURL = baseURL.replace("/?", "/checkout.php?");
+            if (baseURL.contains("affid")) {
+//            checkoutURL = baseURL.split("/?")[0]+"/checkout.php?AFFID=test&C1=testc1&C2=testc2&C3=testc3";
+                checkoutURL = baseURL.replace("/affid=1", "/checkout.php?AFFID=test&C1=testc1&C2=testc2&C3=testc3");
+            } else {
+                if (!originalURL.endsWith("/")) {
+                    originalURL += "/";
+                }
+                originalURL = originalURL + "checkout.php?AFFID=test&C1=testc1&C2=testc2&C3=testc3";
+            }
+            type(By.name("url"), originalURL).sendKeys(Keys.ENTER);
         } else if (securityURL.equals("https://www.digicert.com/help/")) {
             type(By.id("host"), baseURL.split("/")[2]).sendKeys(Keys.ENTER);
 //        } else if (securityURL.equals("")) {
@@ -118,13 +152,18 @@ public class SecuritySteps extends BasePage {
 //                System.out.println(handle);
 //            }
             Object[] windows = windowhandles.toArray();
-          String[] newSet =   windowhandles.toArray(new String[0]);
+            String[] newSet = windowhandles.toArray(new String[0]);
 //            String set[] = (String[]) windows;
             System.out.println((String) windows[0]);
 //            driver.switchTo().window((String) windows[0]);
 
         }
 
+    }
+
+    @And("the checkout url is {string}")
+    public void theCheckoutUrlIs(String arg0) {
+        this.checkoutURL = arg0;
     }
 }
 

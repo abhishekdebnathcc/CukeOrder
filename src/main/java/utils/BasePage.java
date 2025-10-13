@@ -115,19 +115,27 @@ public class BasePage {
 
             WebElement webElement = SeleniumDriver.getDriver().findElement(element);
             Select select = new Select(webElement);
-            if (value.isEmpty()){
-             int noOfOptions =   select.getOptions().size();
+            if (value.equals("+")) {
+                int noOfOptions = select.getOptions().size();
                 select.selectByIndex(randomNoOfDropdownSize(noOfOptions));
-            }
-            new Select(webElement).selectByVisibleText(value);
+            } else {
+                new Select(webElement).selectByVisibleText(value);
+
 //        elementName = webElement.getAttribute("placeholder");
-            log.info("Selecting the option: " + value);
+                log.info("Selecting the option: " + value);
+            }
         }
     }
 
     private static int randomNoOfDropdownSize(int noOfOptions) {
-
-        return 0;
+        int number = 0;
+        while (true) {
+            number = (int) (Math.random() * 100);
+            if (number<noOfOptions){
+                break;
+            }
+        }
+        return number;
     }
 
     public static void submit(By element) {
@@ -156,24 +164,24 @@ public class BasePage {
             if (orderContents[i].endsWith("prospect_id")) {
                 log.info("Prospect ID is: " + orderContents[i + 1].split("&")[0]);
             } else if (orderContents[i].endsWith("order_id")) {
-                orderID =  orderContents[i + 1].split("&")[0];
+                orderID = orderContents[i + 1].split("&")[0];
                 log.info("Order ID is: " + orderID);
 //                log.info("Order ID is: " + orderContents[i + 1].split("&")[0]);
                 break;
             }
         }
-        if(orderIDList!=null){
+        if (orderIDList != null) {
             orderIDList.add(orderID);
         }
     }
 
-    public static String randomNoFrom1to20(){
+    public static String randomNoFrom1to20() {
         int no = 0;
-        while (true){
-            if(no>0 && no<21){
+        while (true) {
+            if (no > 0 && no < 21) {
                 break;
             }
-            no = (int)(Math.random()*100);
+            no = (int) (Math.random() * 100);
         }
         return String.valueOf(no);
     }

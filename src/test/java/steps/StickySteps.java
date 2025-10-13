@@ -16,13 +16,14 @@ public class StickySteps extends BasePage {
     String orderPage = "";
 
     @When("user provides {string} and {string}")
-    public void userProvidesAnd(String arg0, String arg1) {
+    public void userProvidesAnd(String arg0, String arg1) throws InterruptedException {
         type(By.name("admin_name"), arg0).sendKeys(Keys.TAB, arg1, Keys.ENTER);
+        Thread.sleep(7000);
     }
 
     @And("user logs in to the admin")
     public void userLogsInToTheAdmin() {
-        SeleniumDriver.getWaitDriver().until(ExpectedConditions.urlContains("dashboard.php"));
+        SeleniumDriver.getWaitDriver().until(ExpectedConditions.urlContains("dashboard"));
         String adminURL = driver.getCurrentUrl();
         orderPage = adminURL.replace("dashboard", "orders");
         driver.get(orderPage);
@@ -48,12 +49,15 @@ public class StickySteps extends BasePage {
 
     @Then("user searches with email address")
     public void userSearchesWithEmailAddress() {
+        int count =1;
         SeleniumDriver.getWaitDriver().until(ExpectedConditions.urlContains("order"));
         for (String email : emailList) {
             type(By.id("email_filter"), email).sendKeys(Keys.ENTER);
-            for (int i = 1; i < emailList.size(); i++) {
+//            for (int i = 1; i < emailList.size(); i++) {
+               if (count<emailList.size()){
                 driver.switchTo().newWindow(WindowType.TAB);
                 driver.get(orderPage);
+                count++;
             }
         }
     }

@@ -1,4 +1,4 @@
-@order
+@order2
 Feature: Open the funnel
   As a user
   and place orders
@@ -7,7 +7,7 @@ Feature: Open the funnel
   @sweep
   Scenario Outline: Place orders without selecting any item
     Given user has opened <browser>
-    When user has navigated to the funnel "https://www.nextdaywonders.com/v1/KitkatBox/
+    When user has navigated to the funnel "https://www.truepackpath.com/v1/Stanley/"
     Then user has filled up the <email>
     And user has added the shipping information
       | Phone Number | First Name | Last Name | Address      | City      | State | Zip Code |  |
@@ -16,7 +16,7 @@ Feature: Open the funnel
 #
     Then user has typed the <creditCardNumber> and  <paymentType>
     And user has selected the order type as <orderType> and payment type as <paymentType>
-########
+#######
 #    And user has entered the billing information
 #      | First Name | Last Name | Address      | City      | State | Zip Code |
 #      | BILL FIRST | BILL LAST | BILL ADDRESS | BILL CITY | +     | 54321    |
@@ -27,18 +27,18 @@ Feature: Open the funnel
     Examples:
       | browser | email | creditCardNumber | orderType | paymentType |
       |         |       | 1444444444444440 | Regular   | VISA        |
-#      |         | | 1444444444444443 | Regular   | Master      |
+      |         |       | 1444444444444443 | Regular   | Master      |
       |         |       | 1444444444444442 | Prepaid   | VISA        |
-#      |         | | 1444444444444446 | Prepaid   | Master      |
-#      |         |       | 1444444444444441 | Decline   | Visa        |
-#      |         |       | 1444444444444445 | Decline   | Master      |
-#      |         | | 4147090000000001 | Bin       | VISA        |
-#      |         | | 5156760000000001 | Bin       | Master      |
+      |         | | 1444444444444446 | Prepaid   | Master      |
+      |         |       | 1444444444444441 | Decline   | Visa        |
+      |         |  | 1444444444444445 | Decline   | Master      |
+      |         |  | 4147090000000001 | Bin       | VISA        |
+      |         |  | 5156760000000001 | Bin       | Master      |
 
 
-      |         |       | 5111111111111111 | Regular   | Master      |
-      |         |       | 4124511111111111 | Bin       | Visa        |
-      |         |       | 5156761111111111 | Bin       | Master      |
+#      |         |       | 5111111111111111 | Regular   | Master      |
+#      |         |       | 4124511111111111 | Bin       | Visa        |
+#      |         |       | 5156761111111111 | Bin       | Master      |
 
 
 

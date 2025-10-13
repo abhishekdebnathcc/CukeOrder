@@ -20,7 +20,7 @@ import java.util.Map;
 
 public class OrderSteps extends BasePage {
 
-//    public WebDriver driver;
+    //    public WebDriver driver;
     public String email;
 
     @Given("user has opened {}")
@@ -36,29 +36,36 @@ public class OrderSteps extends BasePage {
 
     @Then("user has filled up the {}")
     public void userHasFilledUpThe(String arg0) {
-        if(arg0.equalsIgnoreCase("test")){
+        if (arg0.contains("@")){
+            email = arg0;
+            type(By.name("email"), email);
+            return;
+        }
+        if (arg0.equalsIgnoreCase("test")) {
             arg0 += randomNoFrom1to20();
 
         } else if (arg0.equals("")) {
-            arg0 = "test"+randomNoFrom1to20();
+            arg0 = "test" + randomNoFrom1to20();
         } else if (arg0.equals("+")) {
-            arg0 = "abhishek.debnath+"+(int)(Math.random()*1000);
+            arg0 = "abhishek.debnath+" + (int) (Math.random() * 1000);
         }
-        email = arg0;
-        type(By.name("email"), arg0+"@codeclouds.com");
+        email = arg0 + "@codeclouds.com";
+
+        type(By.name("email"), email);
     }
 
     @And("user has added the shipping information")
     public void userHasAddedTheShippingInformation(DataTable dataTable) {
         Map<String, String> dataMap = dataTable.asMaps().get(0);
-        type(By.name("firstName"),dataMap.get("First Name"));
+        type(By.name("firstName"), dataMap.get("First Name"));
         type(By.name("lastName"), dataMap.get("Last Name"));
         type(By.name("phone"), dataMap.get("Phone Number"));
 
-        type(By.name("shippingAddress1"),dataMap.get("Address"));
+        type(By.name("shippingAddress1"), dataMap.get("Address"));
         type(By.name("shippingCity"), dataMap.get("City"));
         type(By.name("shippingZip"), dataMap.get("Zip Code"));
 //        scroll(By.tagName("button"));
+
         select(By.name("shippingState"), dataMap.get("State"));
     }
 
@@ -69,7 +76,7 @@ public class OrderSteps extends BasePage {
 
         Thread.sleep(1000);
 //        SeleniumDriver.getWaitDriver().until(driver -> ((JavascriptExecutor) driver).executeScript("return document.readyState").equals("complete"));
-        if (arg0.startsWith("4")){
+        if (arg0.startsWith("4")) {
             type(By.name("creditCardNumber"), "41");
             click(By.id("nomaster"));
             type(By.name("creditCardNumber"), "41");
@@ -77,9 +84,15 @@ public class OrderSteps extends BasePage {
         }
 
         type(By.name("creditCardNumber"), arg0);
-        if(!(arg1.equals("Master")||(arg0.startsWith("4")))) try {
-            click(By.id("nomaster"));
+        if (!(arg1.equals("Master") || (arg0.startsWith("4")))) try {
+            try {
+                click(By.xpath("//*[@id='popup']/div/div/div/p[2]/a"));
+
+            } catch (Exception e) {
+                click(By.id("nomaster"));
+            }
         } catch (Exception e) {
+
             log.info("Discount popup not coming");
         }
         select(By.name("expmonth"), "(05) May");
@@ -95,66 +108,67 @@ public class OrderSteps extends BasePage {
 ////        type(By.name("creditCardNumber"), arg0);
 //        click(By.id("nomaster"));
 //
-////        try {
-////            click(By.id("nomaster"));
-////        } catch (Exception e){
-////            log.info("Discount popup not coming");
-////        }
+
+    /// /        try {
+    /// /            click(By.id("nomaster"));
+    /// /        } catch (Exception e){
+    /// /            log.info("Discount popup not coming");
+    /// /        }
 //        select(By.name("expmonth"), "(05) May");
 //        type(By.name("expyear"), "2030");
 //        type(By.name("CVV"), "123");
 //    }
-
     @And("user has selected the order type as {} and payment type as {}")
     public void userHasSelectedTheOrderTypeAsAndPaymentTypeAs(String arg0, String arg1) {
-       log.info("Order type is: "+arg0);
-       log.info(("Payment type is: "+arg1));
+        log.info("Order type is: " + arg0);
+        log.info(("Payment type is: " + arg1));
     }
 
     @Then("user submits the order")
     public void userSubmitsTheOrder() throws InterruptedException {
         submit(By.tagName("button"));
-
+        emailList.add(email);
     }
 
 
     @And("collect the order information from url")
     public void collectTheOrderInformationFromUrl() {
         getOrderID();
-        emailList.add(email);
     }
 
 
     @And("user has submitted the form")
-    public void userHasSubmittedTheForm() {
+    public void userHasSubmittedTheForm() throws InterruptedException {
+        Thread.sleep(700);
         submit(By.xpath("//button[text()='Continue']"));
+//        submit(By.id("submit_partial_btn"));
 
     }
 
     @And("user has entered the billing information")
-    public void userHasEnteredTheBillingInformation(DataTable dataTable) {
-    click(By.xpath("//span[@class='cust_check']"));
+    public void userHasEnteredTheBillingInformation(DataTable dataTable) throws InterruptedException {
+        click(By.xpath("//span[@class='cust_check']"));
 //        click(By.xpath("//*[@id='payment-form']/label"));
-    Map<String, String> billData = dataTable.asMaps().get(0);
-    type(By.name("billingFirstName"), billData.get("First Name"));
-    type(By.name("billingLastName"), billData.get("Last Name"));
-    type(By.name("billingZip"), billData.get("Zip Code"));
-    type(By.name("billingAddress1"), billData.get("Address"));
-    type(By.name("billingCity"), billData.get("City"));
-    select(By.name("billingState"), billData.get("State"));
-
+        Map<String, String> billData = dataTable.asMaps().get(0);
+        type(By.name("billingFirstName"), billData.get("First Name"));
+        type(By.name("billingLastName"), billData.get("Last Name"));
+        type(By.name("billingZip"), billData.get("Zip Code"));
+        type(By.name("billingAddress1"), billData.get("Address"));
+        type(By.name("billingCity"), billData.get("City"));
+        select(By.name("billingState"), billData.get("State"));
+        Thread.sleep(1000);
     }
 
 
     @Then("user opens a new tab")
     public void userOpensANewTab() {
-    driver.switchTo().newWindow(WindowType.TAB);
+        driver.switchTo().newWindow(WindowType.TAB);
     }
 
     @Then("user returns to the previous tab")
     public void userReturnsToThePreviousTab() {
-   String parentTab = ((String)driver.getWindowHandles().toArray()[0]);
-    driver.switchTo().window(parentTab);
+        String parentTab = ((String) driver.getWindowHandles().toArray()[0]);
+        driver.switchTo().window(parentTab);
     }
 
     @Then("user submits the orderType")

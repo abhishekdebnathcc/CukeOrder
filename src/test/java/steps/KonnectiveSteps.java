@@ -91,7 +91,7 @@ public class KonnectiveSteps extends BasePage {
 //        int itemNo = Integer.valueOf(arg0);
 //        SeleniumDriver.getDriver().findElements(By.xpath("//span[@class='package-info__btn']")).get(itemNo - 1).click();
 //        ((JavascriptExecutor)driver).executeScript("arguments[0].click();", driver.findElements(By.xpath("//span[@class='package-info__btn']")).get(itemNo - 1));
-        SeleniumDriver.getWaitDriver().until(ExpectedConditions.urlContains("payment"));
+//        SeleniumDriver.getWaitDriver().until(ExpectedConditions.urlContains("payment"));
         Thread.sleep(1000);
 //        if (isElementPresent(By.id("error_handler_overlay_close"))&&SeleniumDriver.getDriver().findElement(By.id("error_handler_overlay_close")).isDisplayed()){
 //            try{
@@ -121,5 +121,12 @@ public class KonnectiveSteps extends BasePage {
 //            jsClick(By.id("error_handler_overlay_close"));
 //        }
         click(By.tagName("button"));
+    }
+
+    @And("user has selected the product type {string}")
+    public void userHasSelectedTheProductType(String arg0) {
+        if (arg0.equals("2")){
+            click(By.xpath("//*[@id='single']/p"));
+        }
     }
 }
