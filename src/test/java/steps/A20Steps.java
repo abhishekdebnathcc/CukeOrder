@@ -20,16 +20,21 @@ public class A20Steps extends BasePage {
     private String orderNos;
 
     @Given("user navigates to the website")
-    public void userNavigatesToTheWebsite() {
+    public void userNavigatesToTheWebsite() throws InterruptedException {
         SeleniumDriver.setupDriver("chrome");
         driver.get("https://app.billingmgr.net/login/");
+        Thread.sleep(5000);
     }
 
     @When("user clicks on google authentication")
     public void userClicksOnGoogleAuthentication() throws InterruptedException {
         mainWindow = driver.getWindowHandle();
         System.out.println(mainWindow);
-        click(By.xpath("//*[@id='g-btn']"));
+        try {
+            click(By.xpath("//*[@id='g-btn']"));
+        } catch (Exception e) {
+            click(By.xpath("//*[@id='g-btn']"));;
+        }
         Thread.sleep(5000);
         Set<String> windows = driver.getWindowHandles();
         for (String window : windows) {
