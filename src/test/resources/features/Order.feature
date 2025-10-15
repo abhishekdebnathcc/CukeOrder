@@ -7,7 +7,7 @@ Feature: Open the funnel
   @sweep
   Scenario Outline: Place orders without selecting any item
     Given user has opened <browser>
-    When user has navigated to the funnel "https://www.glownestgoods.com/v1/walmartbox/?AFFID=test&C1=testc1&C2=testc2&C3=testc3"
+    When user has navigated to the funnel "https://www.puretreasureshopping.com/v1/Dewaltill/"
     Then user has filled up the <email>
     And user has added the shipping information
       | Phone Number | First Name | Last Name | Address      | City      | State | Zip Code |  |
@@ -17,9 +17,9 @@ Feature: Open the funnel
     Then user has typed the <creditCardNumber> and  <paymentType>
     And user has selected the order type as <orderType> and payment type as <paymentType>
 ########
-    And user has entered the billing information
-      | First Name | Last Name | Address      | City      | State | Zip Code |
-      | BILL FIRST | BILL LAST | BILL ADDRESS | BILL CITY | +     | 54321    |
+#    And user has entered the billing information
+#      | First Name | Last Name | Address      | City      | State | Zip Code |
+#      | BILL FIRST | BILL LAST | BILL ADDRESS | BILL CITY | +     | 54321    |
 #########
     Then user submits the order
     And collect the order information from url
