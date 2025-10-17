@@ -11,7 +11,7 @@ Feature: Open A20
     When user submits id "2323"
     Then user signs into the A20 control pages
     And user navigates to Initial Control
-    Then user provides the order numbers "828500, 828502,828505, 828506,828507, 828508"
+    Then user provides the order numbers "843913, 843914,843919, 843920"
     And user navigates to Subscription Control
     Then user provides the same order numbers ""
     And user navigates to Subscription Control
